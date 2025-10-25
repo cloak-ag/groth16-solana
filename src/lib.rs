@@ -48,3 +48,9 @@
 pub mod decompression;
 pub mod errors;
 pub mod groth16;
+
+#[cfg(feature = "vk")]
+pub mod vk_parser;
+
+#[cfg(feature = "circom")]
+pub mod proof_parser;
