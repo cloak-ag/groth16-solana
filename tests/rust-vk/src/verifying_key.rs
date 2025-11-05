@@ -1,4 +1,4 @@
-use groth16_solana::groth16::Groth16Verifyingkey;
+use pinocchio_groth16::groth16::Groth16Verifyingkey;
 
 pub const VERIFYINGKEY: Groth16Verifyingkey = Groth16Verifyingkey {
 	nr_pubinputs: 5,

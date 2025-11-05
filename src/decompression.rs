@@ -1,5 +1,5 @@
 use crate::errors::Groth16Error;
-use solana_bn254::compression::prelude::{alt_bn128_g1_decompress, alt_bn128_g2_decompress};
+use crate::bn254::{alt_bn128_g1_decompress, alt_bn128_g2_decompress};
 
 pub fn decompress_g1(g1_bytes: &[u8; 32]) -> Result<[u8; 64], Groth16Error> {
     let decompressed_g1 = alt_bn128_g1_decompress(g1_bytes)
@@ -19,7 +19,7 @@ mod tests {
     use super::*;
     use ark_bn254;
     use ark_serialize::{CanonicalDeserialize, CanonicalSerialize, Compress, Validate};
-    use solana_bn254::compression::prelude::convert_endianness;
+    use crate::bn254::convert_endianness;
 
     use ark_serialize::Flags;
     type G1 = ark_bn254::g1::G1Affine;

@@ -44,12 +44,21 @@
 //! ```
 //!
 //! See functional test for a running example how to use this library.
-//!
+
+#![cfg_attr(not(feature = "std"), no_std)]
+
+#[macro_use]
+extern crate alloc;
+
+#[cfg(feature = "std")]
+extern crate std;
+
+pub mod bn254;
 pub mod decompression;
 pub mod errors;
 pub mod groth16;
 
-#[cfg(feature = "vk")]
+#[cfg(all(feature = "vk", feature = "std"))]
 pub mod vk_parser;
 
 #[cfg(feature = "circom")]

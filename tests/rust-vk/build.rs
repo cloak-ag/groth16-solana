@@ -1,4 +1,4 @@
-use groth16_solana::vk_parser::generate_vk_file;
+use pinocchio_groth16::vk_parser::generate_vk_file;
 
 fn main() {
     println!("cargo:rerun-if-changed=build/verification_key.json");

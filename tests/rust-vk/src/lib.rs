@@ -1,7 +1,7 @@
 #![allow(unused)]
 use circom_prover::{prover::ProofLib, witness::WitnessFn, CircomProver};
-use groth16_solana::groth16::Groth16Verifier;
-use groth16_solana::proof_parser::circom_prover::{convert_proof, convert_public_inputs};
+use pinocchio_groth16::groth16::Groth16Verifier;
+use pinocchio_groth16::proof_parser::circom_prover::{convert_proof, convert_public_inputs};
 use light_compressed_account::compressed_account::{CompressedAccount, CompressedAccountData};
 use light_compressed_account::Pubkey;
 use light_hasher::{hash_to_field_size::hash_to_bn254_field_size_be, Poseidon};

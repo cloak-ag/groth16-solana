@@ -1,39 +1,40 @@
+#[cfg(feature = "std")]
 use thiserror::Error;
 
-#[derive(Debug, Error, PartialEq)]
+#[cfg_attr(feature = "std", derive(Error))]
+#[derive(Debug, PartialEq)]
 pub enum Groth16Error {
-    #[error("Incompatible Verifying Key with number of public inputs")]
+    #[cfg_attr(feature = "std", error("Incompatible Verifying Key with number of public inputs"))]
     IncompatibleVerifyingKeyWithNrPublicInputs,
-    #[error("ProofVerificationFailed")]
+    #[cfg_attr(feature = "std", error("ProofVerificationFailed"))]
     ProofVerificationFailed,
-    #[error("PreparingInputsG1AdditionFailed")]
+    #[cfg_attr(feature = "std", error("PreparingInputsG1AdditionFailed"))]
     PreparingInputsG1AdditionFailed,
-    #[error("PreparingInputsG1MulFailed")]
+    #[cfg_attr(feature = "std", error("PreparingInputsG1MulFailed"))]
     PreparingInputsG1MulFailed,
-    #[error("InvalidG1Length")]
+    #[cfg_attr(feature = "std", error("InvalidG1Length"))]
     InvalidG1Length,
-    #[error("InvalidG2Length")]
+    #[cfg_attr(feature = "std", error("InvalidG2Length"))]
     InvalidG2Length,
-    #[error("InvalidPublicInputsLength")]
+    #[cfg_attr(feature = "std", error("InvalidPublicInputsLength"))]
     InvalidPublicInputsLength,
-    #[error("DecompressingG1Failed")]
+    #[cfg_attr(feature = "std", error("DecompressingG1Failed"))]
     DecompressingG1Failed,
-    #[error("DecompressingG2Failed")]
+    #[cfg_attr(feature = "std", error("DecompressingG2Failed"))]
     DecompressingG2Failed,
-    #[error("PublicInputGreaterThanFieldSize")]
+    #[cfg_attr(feature = "std", error("PublicInputGreaterThanFieldSize"))]
     PublicInputGreaterThanFieldSize,
-    #[cfg(feature = "circom")]
-    #[error("Arkworks serialization error: {0}")]
-    ArkworksSerializationError(String),
-    #[cfg(feature = "circom")]
-    #[error("Failed to convert proof component to byte array")]
+    #[cfg_attr(feature = "std", error("Failed to convert proof component to byte array"))]
     ProofConversionError,
+    #[cfg(feature = "circom")]
+    #[cfg_attr(feature = "std", error("Arkworks serialization error"))]
+    ArkworksSerializationError,
 }
 
 #[cfg(feature = "circom")]
 impl From<ark_serialize::SerializationError> for Groth16Error {
-    fn from(e: ark_serialize::SerializationError) -> Self {
-        Groth16Error::ArkworksSerializationError(e.to_string())
+    fn from(_e: ark_serialize::SerializationError) -> Self {
+        Groth16Error::ArkworksSerializationError
     }
 }
 
@@ -50,10 +51,9 @@ impl From<Groth16Error> for u32 {
             Groth16Error::DecompressingG1Failed => 7,
             Groth16Error::DecompressingG2Failed => 8,
             Groth16Error::PublicInputGreaterThanFieldSize => 9,
+            Groth16Error::ProofConversionError => 10,
             #[cfg(feature = "circom")]
-            Groth16Error::ArkworksSerializationError(_) => 10,
-            #[cfg(feature = "circom")]
-            Groth16Error::ProofConversionError => 11,
+            Groth16Error::ArkworksSerializationError => 11,
         }
     }
 }
